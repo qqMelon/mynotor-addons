@@ -10,8 +10,10 @@ import (
 )
 
 func main() {
-	dir := "/home/maximen/projects/mynotor-addons/"
-	baseDir := "/home/maximen/projects/mynotor-addons/AddOns/"
+	dir := "/home/maximen/project/perso/mynotor-addons/"
+	baseDir := "/home/maximen/project/perso/mynotor-addons/AddOns/"
+
+  dlState := ""
 
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
@@ -29,17 +31,27 @@ func main() {
 
 	})
 
+	r.GET("/browse", func(ctx *gin.Context) {
+		ctx.HTML(http.StatusOK, "browse.html", gin.H{
+      "state": dlState,
+			// "files": fileList,
+		})
+	})
+
 	r.POST("/create", func(ctx *gin.Context) {
+    dlState = "Downloading ..."
 		newFolderName := ctx.PostForm("folderName")
 		newFolderPath := filepath.Join(dir, "AddOns", newFolderName)
 
 		err := os.Mkdir(newFolderPath, os.ModePerm)
 		if err != nil {
+      dlState = "Error in downloading"
 			ctx.String(http.StatusInternalServerError, "Error lors de la création du dossier")
 			return
 		}
 
-		ctx.Redirect(http.StatusSeeOther, "/")
+    dlState = "Successfuly installed"
+		ctx.Redirect(http.StatusSeeOther, "/browse")
 	})
 
 	r.Static("/static", "./static")

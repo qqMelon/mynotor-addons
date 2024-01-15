@@ -14,6 +14,13 @@
     </div>
 
     <div>
+      <h2>Créer un nouveau dossier:</h2>
+      <form action="/create" method="post">
+        <label for="folderName">Nom du dossier: </label>
+        <input type="text" id="folderName" name="folderName" required><br>
+        <input type="submit" value="Créer">
+      </form>
+      <span>{{.state}}</span>
     </div>
   
   </body>

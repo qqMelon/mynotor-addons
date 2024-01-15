@@ -12,6 +12,8 @@ func CheckPath () {
   if err != nil {
     fmt.Println("Error while reading file")
   }
+
+  fmt.Println("File: ", v)
 }
 
 func readFromFile(file string) (string, error) {
@@ -23,6 +25,6 @@ func readFromFile(file string) (string, error) {
   return string(data), nil
 }
 
-func writeToFile(file, value string) error {
-
-}
+// func writeToFile(file, value string) error {
+//
+// }
